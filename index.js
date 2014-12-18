@@ -16,14 +16,14 @@ var encode = function( filePath ) {
 
 module.exports = function( inputText, inputName ) {
   var transformedText = inputText,
-      regex = /url\(\\?['"]?(\.*\/?[\w_-]*\/)*([\w-_]+\.\w{3,4})\\?['"]?\)/g,
+      regex = /url\((?:\\?['"])?(.*?)([\w-_]+\.\w{3,4})\\?['"]?\)/g,
       found = inputText.match(regex);
 
   if (found) {
     transformedText = inputText.replace(regex, function( match, cg1, cg2) {
-      // cg1 = capture group $1
-      // cg2 = capture group $2
-      var filePath = path.dirname(inputName) + '/' +(cg1 ? cg1 : '') + cg2,
+      // cg1 = capture group $1 (path)
+      // cg2 = capture group $2 (filename)
+      var filePath = path.dirname(inputName) + '/' + (cg1 ? cg1 : '') + cg2,
           prefix = 'data:' + mimetypes[path.extname(cg2)] + ';base64,';
 
       return 'url(' + prefix + encode(filePath) + ')';
