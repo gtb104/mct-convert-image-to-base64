@@ -20,7 +20,7 @@ module.exports = function( inputText, inputName ) {
       found = inputText.match(regex);
 
   if (found) {
-    transformedText = inputText.replace(regex, function( match, cg1, cg2) {
+    transformedText = inputText.replace(regex, function( match, cg1, cg2 ) {
       // cg1 = capture group $1 (path)
       // cg2 = capture group $2 (filename)
       var filePath = path.dirname(inputName) + '/' + (cg1 ? cg1 : '') + cg2,
