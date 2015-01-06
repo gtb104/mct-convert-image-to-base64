@@ -5,6 +5,11 @@ mct-rewrite-css-url-paths
 
 This Mimosa-Combine Transform package will find image URLs within stylesheets and replace the URL with a base64 representation of the linked image.
 
+Supported file types are:
+* image/gif
+* image/jpeg
+* image/png
+
 For information on mimosa-combine transforms, checkout the [mimosa-combine repo](https://github.com/dbashford/mimosa-combine#transform-functions).
 
 ## Installation
@@ -22,3 +27,7 @@ combine: {
           require('mct-convert-image-to-base64')
         ]
 ```
+
+## Testing
+
+Run `npm test` to execute test suite.

@@ -1,6 +1,6 @@
 {
   "name": "mct-convert-image-to-base64",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "homepage": "https://github.com/gtb104/mct-convert-image-to-base64",
   "author": "Geoffrey Bell <gtb104@yahoo.com> (https://gtb104.wordpress.com/)",
   "description": "This Mimosa-Combine Transform package will find image URLs within stylesheets and replace the URL with a base64 representation of the linked image.",
@@ -14,15 +14,23 @@
     "type": "git",
     "url": "https://github.com/gtb104/mct-convert-image-to-base64"
   },
+  "devDependencies": {
+    "mocha": "1.9.0",
+    "chai": "1.5.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node_modules/.bin/mocha"
   },
   "keywords": [
     "mimosa",
     "combine",
     "css",
     "image",
-    "base64"
+    "base64",
+    "encode",
+    "jpg",
+    "png",
+    "gif"
   ],
   "license": "MIT",
   "main": "index.js"
