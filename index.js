@@ -6,27 +6,31 @@ var mimetypes = {
   '.jpeg': 'image/jpeg',
   '.jpg':  'image/jpeg',
   '.jpe':  'image/jpeg',
-  '.png':  'image/png',
-  '.bmp':  'image/bmp'
+  '.png':  'image/png'
 };
 
 var encode = function( filePath ) {
   return new Buffer(fs.readFileSync(filePath)).toString('base64');
 };
 
-module.exports = function( inputText, inputName ) {
+module.exports = function( inputText, inputName, outputName ) {
+  if (!inputText || !inputName) {
+    return inputText;
+  }
+
   var transformedText = inputText,
-      regex = /url\((?:\\?['"])?(.*?)([\w-_]+\.\w{3,4})\\?['"]?\)/g,
+      regex = /url\((?:\\?['"])?([\w\/\\._-]*?)([\w-_]+\.\w{3,4})\\?['"]?\)/g,
+      // capture group $1 (path)
+      // capture group $2 (filename)
       found = inputText.match(regex);
 
   if (found) {
-    transformedText = inputText.replace(regex, function( match, cg1, cg2 ) {
-      // cg1 = capture group $1 (path)
-      // cg2 = capture group $2 (filename)
-      var filePath = path.dirname(inputName) + '/' + (cg1 ? cg1 : '') + cg2,
-          prefix = 'data:' + mimetypes[path.extname(cg2)] + ';base64,';
-
-      return 'url(' + prefix + encode(filePath) + ')';
+    transformedText = inputText.replace(regex, function( match, filePath, fileName ) {
+      var fullPath = path.resolve('test/assets/' + filePath + fileName),
+          prefix = 'data:' + mimetypes[path.extname(fileName.toLowerCase())] + ';base64,',
+          falseFind = match.charAt === '#';
+      var encodedFile = encode(fullPath);
+      return falseFind ? match : 'url(' + prefix + encodedFile + ')';
     });
   }
   return transformedText;
