@@ -26,7 +26,7 @@ module.exports = function( inputText, inputName, outputName ) {
 
   if (found) {
     transformedText = inputText.replace(regex, function( match, filePath, fileName ) {
-      var fullPath = path.resolve('test/assets/' + filePath + fileName),
+      var fullPath = path.dirname(inputName) + '/' + (filePath ? filePath : '') + fileName,
           prefix = 'data:' + mimetypes[path.extname(fileName.toLowerCase())] + ';base64,',
           falseFind = match.charAt === '#';
       var encodedFile = encode(fullPath);
